@@ -42,6 +42,29 @@ module.exports = {
           'postcss-loader'
         ]
       },
+      {
+        test: /\.s[ac]ss$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: (resourcePath, context) => {
+                return path.relative(path.dirname(resourcePath), context) + "/";
+              },
+            },
+          },
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [["autoprefixer"]],
+              },
+            },
+          },
+          "sass-loader",
+        ],
+      },
     ]
   },
   plugins: [
